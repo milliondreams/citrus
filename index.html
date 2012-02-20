@@ -1,0 +1,123 @@
+<!DOCTYPE HTML5>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+
+        ul.tree, ul.tree ul {
+            list-style-type: none;
+            background: url('images/vline.png') repeat-y;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul.tree ul {
+            margin-left: -8px;
+        }
+
+        ul.tree li {
+            margin: 0;
+            padding: 0 22px;
+            line-height: 20px;
+            background: url('images/node.png') no-repeat;
+        }
+        
+        ul.tree li:last-child {
+            background: #fff url('images/lastnode.png') no-repeat;
+        }
+
+        ul.tree li span.expander{
+            display: inline-block;
+            height: 10px;
+            margin-left: -12px;
+            margin-top: 2px;
+            padding: 4px 2px 0 0;
+            width: 10px;
+        }
+
+        ul.tree li.collapsed > span.expander{
+            background: url("images/expand.gif") transparent no-repeat left center;
+        }
+        ul.tree li.expanded > span.expander{
+            background: url("images/collapse.gif") transparent no-repeat left bottom;
+        }
+
+    </style>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            (function( $ ) {
+                $.fn.makeTree = function() {
+                    /*
+                     * Hide all the child tree elements
+                     */
+                    var parentLi = this.find('li').has('ul');
+                    parentLi.children("ul").hide();
+                    parentLi.addClass('collapsed');
+
+                    /*
+                     * Add a span for expander
+                     */
+                    parentLi.prepend('<span class="expander"></span>');
+
+
+                    /*
+                     * Expand the child tree
+                     */
+                    parentLi.children('span.expander').click(function(event){
+                        $(this).parent("li").children('ul').toggle();
+                        $(this).parent("li").toggleClass('collapsed expanded');
+                        event.stopPropagation();
+                    });
+                };
+            })( jQuery );
+
+            $('.tree').makeTree();
+        });
+    </script>
+</head>
+<body>
+   <ul class="tree">
+       <li>one</li>
+       <li>two</li>
+       <li>three
+           <ul>
+               <li>three-one</li>
+               <li>three-two</li>
+               <li>three-three
+                   <ul>
+                       <li>three-11</li>
+                       <li>three-12</li>
+                       <li>three-13</li>
+                   </ul>
+               </li>
+               <li>three-four</li>
+               <li>three-five</li>
+           </ul>
+       </li>
+       <li>four</li>
+       <li>five
+           <ul>
+               <li>five-one</li>
+               <li>five-two
+                   <ul>
+                       <li>five-21</li>
+                       <li>five-22
+                           <ul>
+                               <li>five-22-one</li>
+                               <li>five-22-two</li>
+                               <li>five-22-three</li>
+                           </ul>
+                       </li>
+                       <li>five-23</li>
+                       <li>five-24</li>
+                   </ul>
+               </li>
+               <li>five-three</li>
+           </ul>
+       </li>
+       <li>six</li>
+
+   </ul>
+</body>
+</html>
